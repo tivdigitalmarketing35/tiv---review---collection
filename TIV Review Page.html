@@ -1,0 +1,437 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>TIV Review Page</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Hind:wght@400;500;600&display=swap">
+<style>
+/* Layout: one narrow column, phone first. Brand header with the TIV logo, four numbered steps (a real sequence), then one large action button. Palette comes from the logo: royal purple ground, orange for the action. */
+:root {
+  --bg: #1b0a50;
+  --surface: #271270;
+  --surface-2: #35199a;
+  --fg: #f6f1ff;
+  --muted: #c4b6ee;
+  --line: #4d2db3;
+  --accent: #ff7a0d;
+  --accent-fg: #241100;
+  --glow: #a47dff;
+  --royal: #7a45f0;
+  --ok: #7be0a8;
+  --font-display: 'Baloo 2', 'Hind', 'Noto Sans Devanagari', system-ui, sans-serif;
+  --font-body: 'Hind', 'Noto Sans Devanagari', system-ui, sans-serif;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f0ff; --surface: #ffffff; --surface-2: #eadfff; --fg: #1e0f55; --muted: #5b4a94;
+    --line: #d5c6f6; --accent: #f26e05; --accent-fg: #241100; --glow: #5b2bd6; --royal: #5b2bd6; --ok: #12804a;
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f5f0ff; --surface: #ffffff; --surface-2: #eadfff; --fg: #1e0f55; --muted: #5b4a94;
+  --line: #d5c6f6; --accent: #f26e05; --accent-fg: #241100; --glow: #5b2bd6; --royal: #5b2bd6; --ok: #12804a;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background-color: var(--bg);
+  background-image: radial-gradient(70% 320px at 50% 0%, var(--surface-2) 0%, transparent 100%);
+  background-repeat: no-repeat;
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  padding-block: 20px 44px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 480px; margin-inline: auto; display: grid; gap: 26px; }
+button, a.cta { font: inherit; }
+:focus-visible { outline: 3px solid var(--glow); outline-offset: 2px; }
+
+/* brand */
+.brand { display: flex; align-items: center; gap: 14px; }
+.logo { width: 60px; height: 60px; flex: none; display: block; border-radius: 14px; object-fit: cover; box-shadow: 0 0 0 1.5px var(--line); }
+.brand b { display: block; font-family: var(--font-display); font-size: 20px; line-height: 1.1; font-weight: 700; }
+.brand span { display: block; font-size: 13px; color: var(--muted); letter-spacing: 0.02em; }
+
+/* hero */
+h1 {
+  margin: 0 0 8px; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(28px, 8vw, 36px); line-height: 1.12; text-wrap: balance;
+}
+.lede { margin: 0; color: var(--muted); max-width: 46ch; }
+
+/* steps */
+.step { display: grid; gap: 12px; min-width: 0; }
+.step h2 {
+  margin: 0; display: flex; align-items: center; gap: 10px;
+  font-size: 15px; font-weight: 600; letter-spacing: 0.01em;
+}
+.num {
+  width: 24px; height: 24px; flex: none; border-radius: 50%;
+  display: grid; place-items: center; font-size: 13px; font-weight: 600;
+  background: var(--accent); color: var(--accent-fg);
+}
+
+.seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 4px; background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; }
+.seg button {
+  min-height: 44px; border: 0; border-radius: 10px; background: transparent;
+  color: var(--muted); font-weight: 600; cursor: pointer;
+}
+.seg button[aria-pressed="true"] { background: var(--royal); color: #fff; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips button {
+  min-height: 40px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  background: var(--surface); color: var(--fg); border: 1.5px solid var(--line); font-weight: 500; font-size: 15px;
+}
+.chips button[aria-pressed="true"] { border-color: var(--accent); background: var(--surface-2); color: var(--fg); box-shadow: inset 0 0 0 1px var(--accent); }
+
+.drafts { display: grid; gap: 10px; }
+.draft {
+  display: flex; gap: 12px; align-items: flex-start; text-align: left; width: 100%;
+  padding: 14px; border-radius: 14px; cursor: pointer; color: var(--fg);
+  background: var(--surface); border: 1.5px solid var(--line);
+}
+.draft .dot {
+  width: 20px; height: 20px; flex: none; margin-top: 3px; border-radius: 50%;
+  border: 2px solid var(--muted);
+}
+.draft .txt { min-width: 0; font-size: 15px; line-height: 1.6; }
+.draft[aria-checked="true"] { border-color: var(--glow); background: var(--surface-2); }
+.draft[aria-checked="true"] .dot { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 0 45%, transparent 50%); }
+
+textarea {
+  width: 100%; min-height: 170px; resize: vertical; padding: 14px;
+  border-radius: 14px; border: 1.5px solid var(--line); background: var(--surface); color: var(--fg);
+  font: inherit; font-size: 16px; line-height: 1.6;
+}
+textarea::placeholder { color: var(--muted); }
+.hint { margin: 0; font-size: 13px; color: var(--muted); }
+
+/* action */
+.action { display: grid; gap: 12px; }
+a.cta {
+  display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px;
+  padding: 0 18px; border-radius: 14px; text-decoration: none;
+  background: var(--accent); color: var(--accent-fg);
+  font-family: var(--font-display); font-weight: 700; font-size: 18px; text-align: center;
+}
+a.cta:active { transform: translateY(1px); }
+.alt {
+  min-height: 44px; background: transparent; border: 1.5px solid var(--line); color: var(--fg);
+  border-radius: 12px; cursor: pointer; font-weight: 500;
+}
+.status { min-height: 1.5em; margin: 0; font-size: 14px; color: var(--ok); font-weight: 500; }
+
+.how { margin: 0; padding: 14px 14px 14px 36px; background: var(--surface); border: 1.5px solid var(--line); border-radius: 14px; font-size: 14px; color: var(--muted); }
+.how li + li { margin-top: 4px; }
+.how strong { color: var(--fg); font-weight: 600; }
+
+footer { font-size: 12.5px; color: var(--muted); display: grid; gap: 4px; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .draft, .chips button, .seg button, a.cta { transition: background-color .15s, border-color .15s, transform .1s; }
+}
+</style>
+
+<div class="wrap">
+  <header class="brand">
+    <img class="logo" src="data:image/webp;base64,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" width="60" height="60" alt="TIV logo">
+    <div>
+      <b>TIV Digital Marketing</b>
+      <span>Take Your Business Online</span>
+    </div>
+  </header>
+
+  <section>
+    <h1>Shukriya! Ek chhota sa review dijiye</h1>
+    <p class="lede">Aapka 30 second ka review hamari team ko aur businesses tak pahunchne mein madad karta hai. Neeche ke draft sirf shuruaat hain, apne asli experience ke hisaab se badal dein.</p>
+  </section>
+
+  <section class="step" aria-labelledby="s1">
+    <h2 id="s1"><span class="num">1</span> Bhasha chunein</h2>
+    <div class="seg" id="langs"></div>
+  </section>
+
+  <section class="step" aria-labelledby="s2">
+    <h2 id="s2"><span class="num">2</span> Aapne kis service ka use kiya?</h2>
+    <div class="chips" id="svcs"></div>
+  </section>
+
+  <section class="step" aria-labelledby="s3">
+    <h2 id="s3"><span class="num">3</span> Ek draft chunein</h2>
+    <div class="drafts" id="drafts" role="radiogroup" aria-labelledby="s3"></div>
+  </section>
+
+  <section class="step" aria-labelledby="s4">
+    <h2 id="s4"><span class="num">4</span> Apne shabdon mein badlein</h2>
+    <textarea id="review" aria-label="Aapka review" placeholder="Yahan apna review likhein"></textarea>
+    <p class="hint">Jo sach hai wahi likhein. Naam, kaam ya apni baat jod sakte hain.</p>
+  </section>
+
+  <section class="action">
+    <p class="hint">Is button ko dabate hi aapka review apne aap copy ho jaayega aur Google review page khul jaayega.</p>
+    <a class="cta" id="post" href="https://g.page/r/Ccc4iyH0qOIIEAE/review" target="_blank" rel="noopener">
+      <span>Google par review dein</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <button type="button" class="alt" id="copyonly">Sirf text copy karein</button>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <ol class="how">
+      <li>Google page khulne par review ke text box ko dabakar rakhein aur <strong>Paste</strong> dabayein. Keyboard ke upar bhi Paste ka option dikh sakta hai.</li>
+      <li>Apni <strong>star rating</strong> chunein.</li>
+      <li><strong>Post</strong> dabayein.</li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>Ye review aapki apni raay hai. Draft sirf madad ke liye diye gaye hain.</span>
+    <span>TIV Digital Marketing · Indore, Madhya Pradesh</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  /* Each draft = one service-specific part + one closing line. */
+  var SPEC = {
+    hi: {
+      general: [
+        "TIV Digital Marketing के साथ काम करने का अनुभव बहुत अच्छा रहा। टीम ने हमारी ज़रूरत ध्यान से समझी और समय पर काम किया।",
+        "सीधी बात, साफ़ रिपोर्टिंग और समय पर डिलीवरी। TIV की टीम सवालों के जवाब जल्दी देती है और काम पारदर्शिता से करती है।"
+      ],
+      meta: [
+        "हमारे Meta Ads (फ़ेसबुक और इंस्टाग्राम) TIV संभालती है। कैंपेन की प्लानिंग साफ़ थी और बजट का सही इस्तेमाल हुआ।",
+        "Meta Ads शुरू करने से पहले TIV ने हमारा बिज़नेस और ऑडियंस समझी, फिर टारगेटिंग और क्रिएटिव तय किए। रिपोर्ट आसान भाषा में मिलती है।"
+      ],
+      google: [
+        "TIV ने हमारे Google Ads कैंपेन सेट किए और संभाले। सही कीवर्ड चुने गए और बजट पर पूरा नियंत्रण रहा।",
+        "Google Ads के लिए TIV की टीम ने हमारे बिज़नेस के हिसाब से प्लान बनाया। रिपोर्ट साफ़ होती है, इसलिए पता रहता है कि खर्च कहाँ जा रहा है।"
+      ],
+      web: [
+        "TIV ने हमारी बिज़नेस वेबसाइट बनाई। डिज़ाइन साफ़ है, मोबाइल पर अच्छी चलती है और डिलीवरी समय पर हुई।",
+        "वेबसाइट डेवलपमेंट के लिए TIV से बात हुई। उन्होंने हमारी ज़रूरत सरल भाषा में समझी, बजट के भीतर काम किया और डिलीवरी के बाद भी सपोर्ट दिया।"
+      ],
+      seo: [
+        "TIV ने हमारी वेबसाइट का SEO किया। कीवर्ड और पेजों पर साफ़ प्लान के साथ काम हुआ और सर्च में हमारी मौजूदगी बेहतर हुई।",
+        "SEO के लिए TIV की टीम जानकार है। काम का तरीका समझाते हैं और नतीजों के बारे में ईमानदारी से बताते हैं।"
+      ],
+      aiagent: [
+        "TIV ने हमारे बिज़नेस के लिए AI एजेंट बनाया। ग्राहकों के सवालों के जवाब अब जल्दी मिल जाते हैं और हमारी टीम का समय बचता है।",
+        "AI एजेंट के बारे में हमें ज़्यादा जानकारी नहीं थी। TIV ने सरल भाषा में समझाया और हमारे काम के हिसाब से सेट कर दिया।"
+      ],
+      aiauto: [
+        "TIV ने हमारे दोहराए जाने वाले कामों को AI ऑटोमेशन से ऑटोमेट किया। हाथ का काम कम हुआ और समय बचता है।",
+        "AI ऑटोमेशन के लिए TIV ने पहले हमारी प्रक्रिया समझी, फिर सही टूल लगाए। सेटअप आसान है और टीम ने चलाना भी सिखाया।"
+      ],
+      aiflow: [
+        "TIV ने हमारा AI वर्कफ़्लो सेट किया। अलग-अलग काम अब एक फ़्लो में चलते हैं और फ़ॉलो-अप छूटता नहीं।",
+        "AI वर्कफ़्लो बनाने में TIV की टीम ने हमारी टीम के साथ बैठकर प्रक्रिया समझी। नया सिस्टम सीधा और इस्तेमाल में आसान है।"
+      ],
+      gbp: [
+        "TIV ने हमारी Google Business Profile ऑप्टिमाइज़ की। प्रोफ़ाइल अब ज़्यादा व्यवस्थित है और लोकल सर्च में मौजूदगी बेहतर हुई।",
+        "लोकल सर्च में दिखने के लिए हमने TIV की मदद ली। उन्होंने प्रोफ़ाइल, फ़ोटो, कैटेगरी और जानकारी सब ठीक से सेट किया।"
+      ],
+      social: [
+        "हमारी सोशल मीडिया मार्केटिंग TIV संभालती है। पोस्ट और क्रिएटिव अच्छे बनते हैं और शेड्यूल के हिसाब से समय पर जाते हैं।",
+        "सोशल मीडिया कंटेंट और क्रिएटिव में TIV की टीम ने मेहनत की। हमारे सुझावों पर बदलाव जल्दी करती है और ब्रांड का लुक एक जैसा रहता है।"
+      ]
+    },
+    en: {
+      general: [
+        "Great experience working with TIV Digital Marketing. The team understood our requirements carefully and delivered on time.",
+        "Clear communication, transparent reporting and timely delivery. TIV's team answers questions quickly and keeps the work easy to follow."
+      ],
+      meta: [
+        "TIV manages our Meta Ads on Facebook and Instagram. The campaign planning was clear and the budget was used sensibly.",
+        "Before starting our Meta Ads, TIV took time to understand our business and audience, then set up the targeting and creatives. Reports come in plain language."
+      ],
+      google: [
+        "TIV set up and manages our Google Ads campaigns. The keywords were chosen well and we stayed in full control of the budget.",
+        "For Google Ads, TIV built a plan around our business. Reports are clear, so we always know where the money is going."
+      ],
+      web: [
+        "TIV built our business website. The design is clean, it works well on mobile and it was delivered on time.",
+        "We worked with TIV on website development. They understood our needs in simple terms, stayed within budget and supported us after delivery."
+      ],
+      seo: [
+        "TIV handled the SEO for our website. They worked to a clear plan on keywords and pages, and our visibility in search has improved.",
+        "TIV's team is knowledgeable about SEO. They explain how the work is done and are honest about what to expect from the results."
+      ],
+      aiagent: [
+        "TIV built an AI Agent for our business. Customer questions now get quick replies and our team saves time.",
+        "We knew little about AI Agents. TIV explained everything in simple terms and set it up to fit the way we work."
+      ],
+      aiauto: [
+        "TIV automated our repetitive tasks with AI Automation. There is less manual work and we save time.",
+        "For AI Automation, TIV first studied our process, then set up the right tools. The setup is easy and the team showed us how to run it."
+      ],
+      aiflow: [
+        "TIV set up our AI Workflow. Different tasks now run in one flow and follow-ups no longer get missed.",
+        "To build our AI Workflow, TIV sat down with our team and understood the process. The new system is simple and easy to use."
+      ],
+      gbp: [
+        "TIV optimised our Google Business Profile. The profile is now better organised and we are more visible in local search.",
+        "We took TIV's help to show up in local search. They set up our profile, photos, categories and business details properly."
+      ],
+      social: [
+        "TIV handles our social media marketing. The posts and creatives look good and go out on schedule.",
+        "The TIV team puts real effort into social media content and creatives. They make changes quickly on our feedback and keep our brand look consistent."
+      ]
+    },
+    hn: {
+      general: [
+        "TIV Digital Marketing ke saath kaam karne ka experience bahut accha raha. Team ne hamari requirement dhyaan se samjhi aur time par kaam kiya.",
+        "Seedhi baat, clear reporting aur time par delivery. TIV ki team sawaalon ke jawab jaldi deti hai aur kaam transparent rakhti hai."
+      ],
+      meta: [
+        "Hamare Meta Ads (Facebook aur Instagram) TIV handle karti hai. Campaign planning clear thi aur budget ka sahi use hua.",
+        "Meta Ads shuru karne se pehle TIV ne hamara business aur audience samjha, phir targeting aur creatives set kiye. Report aasaan bhasha mein milti hai."
+      ],
+      google: [
+        "TIV ne hamare Google Ads campaigns set kiye aur manage kiye. Sahi keywords chune gaye aur budget par poora control raha.",
+        "Google Ads ke liye TIV ki team ne hamare business ke hisaab se plan banaya. Report clear hoti hai, isliye pata rehta hai ki kharcha kahan ja raha hai."
+      ],
+      web: [
+        "TIV ne hamari business website banayi. Design saaf hai, mobile par achhi chalti hai aur delivery time par hui.",
+        "Website development ke liye TIV se baat hui. Unhone hamari requirement simple bhasha mein samjhi, budget ke andar kaam kiya aur delivery ke baad bhi support diya."
+      ],
+      seo: [
+        "TIV ne hamari website ka SEO kiya. Keywords aur pages par saaf plan ke saath kaam hua aur search mein visibility behtar hui.",
+        "SEO ke liye TIV ki team knowledgeable hai. Kaam ka process explain karte hain aur results ke baare mein honest rehte hain."
+      ],
+      aiagent: [
+        "TIV ne hamare business ke liye AI Agent banaya. Customer ke sawaalon ke jawab ab jaldi mil jaate hain aur hamari team ka time bachta hai.",
+        "AI Agent ke baare mein hamein zyada idea nahi tha. TIV ne simple bhasha mein samjhaya aur hamare kaam ke hisaab se set kar diya."
+      ],
+      aiauto: [
+        "TIV ne hamare repeat kaam ko AI Automation se automate kiya. Manual kaam kam hua aur time bachta hai.",
+        "AI Automation ke liye TIV ne pehle hamara process samjha, phir sahi tools lagaye. Setup aasaan hai aur team ne use chalana bhi sikhaya."
+      ],
+      aiflow: [
+        "TIV ne hamara AI Workflow set kiya. Alag-alag kaam ab ek flow mein chalte hain aur follow-up miss nahi hota.",
+        "AI Workflow banane mein TIV ki team ne hamari team ke saath baith kar process samjha. Naya system seedha aur use karne mein aasaan hai."
+      ],
+      gbp: [
+        "TIV ne hamari Google Business Profile optimize ki. Profile ab zyada organised hai aur local search mein visibility behtar hui.",
+        "Local search mein dikhne ke liye hamne TIV ki help li. Unhone profile, photos, categories aur details sahi tarah se set kiye."
+      ],
+      social: [
+        "Hamari social media marketing TIV handle karti hai. Posts aur creatives achhe bante hain aur schedule ke hisaab se time par jaate hain.",
+        "Social media content aur creatives mein TIV ki team ne mehnat ki. Hamare feedback par changes jaldi karti hai aur brand ka look consistent rehta hai."
+      ]
+    }
+  };
+
+  var CLOSE = {
+    hi: ["डिजिटल मार्केटिंग के लिए TIV से ज़रूर बात करें।", "आगे भी साथ काम करना चाहेंगे।"],
+    en: ["I'd recommend them to any business looking to grow online.", "We look forward to working together again."],
+    hn: ["Digital marketing ke liye TIV se zaroor baat karein.", "Aage bhi saath kaam karna chahenge."]
+  };
+
+  function draftsFor(l, s) {
+    return SPEC[l][s].map(function (t, i) { return t + " " + CLOSE[l][i]; });
+  }
+
+  var LANGS = [["hn", "Hinglish"], ["hi", "हिन्दी"], ["en", "English"]];
+  var SVCS = [
+    ["general", "Overall experience"], ["meta", "Meta Ads"], ["google", "Google Ads"],
+    ["web", "Website Development"], ["seo", "SEO Optimization"], ["aiagent", "AI Agent"],
+    ["aiauto", "AI Automation"], ["aiflow", "AI Workflow"], ["gbp", "GBP Optimization"],
+    ["social", "Social Media Marketing"]
+  ];
+
+  var lang = "hn", svc = "general", idx = 0;
+  var elLangs = document.getElementById("langs");
+  var elSvcs = document.getElementById("svcs");
+  var elDrafts = document.getElementById("drafts");
+  var ta = document.getElementById("review");
+  var post = document.getElementById("post");
+  var copyOnly = document.getElementById("copyonly");
+  var status = document.getElementById("status");
+
+  function drawButtons(box, list, current, onPick) {
+    box.innerHTML = "";
+    list.forEach(function (it) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.textContent = it[1];
+      b.setAttribute("aria-pressed", it[0] === current ? "true" : "false");
+      b.addEventListener("click", function () { onPick(it[0]); });
+      box.appendChild(b);
+    });
+  }
+
+  function drawDrafts() {
+    elDrafts.innerHTML = "";
+    draftsFor(lang, svc).forEach(function (t, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "draft";
+      b.setAttribute("role", "radio");
+      b.setAttribute("aria-checked", i === idx ? "true" : "false");
+      var dot = document.createElement("span");
+      dot.className = "dot";
+      dot.setAttribute("aria-hidden", "true");
+      var txt = document.createElement("span");
+      txt.className = "txt";
+      txt.textContent = t;
+      if (lang === "hi") txt.lang = "hi";
+      b.appendChild(dot);
+      b.appendChild(txt);
+      b.addEventListener("click", function () { idx = i; refresh(true); });
+      elDrafts.appendChild(b);
+    });
+  }
+
+  function refresh(loadText) {
+    drawButtons(elLangs, LANGS, lang, function (v) { lang = v; idx = 0; refresh(true); });
+    drawButtons(elSvcs, SVCS, svc, function (v) { svc = v; idx = 0; refresh(true); });
+    drawDrafts();
+    if (loadText) {
+      ta.value = draftsFor(lang, svc)[idx];
+      ta.lang = lang === "hi" ? "hi" : "en";
+      status.textContent = "";
+    }
+  }
+
+  function copyText(text, done) {
+    function fallback() {
+      try {
+        ta.focus();
+        ta.select();
+        var ok = document.execCommand("copy");
+        done(ok);
+      } catch (e) { done(false); }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+    } else { fallback(); }
+  }
+
+  post.addEventListener("click", function () {
+    var text = ta.value.trim();
+    if (!text) { status.textContent = "Google review page khul raha hai."; return; }
+    copyText(text, function (ok) {
+      status.textContent = ok
+        ? "Review copy ho gaya. Google page par paste karein."
+        : "Text select ho gaya hai. Copy karke Google page par paste karein.";
+    });
+  });
+
+  copyOnly.addEventListener("click", function () {
+    var text = ta.value.trim();
+    if (!text) { status.textContent = "Pehle review likhein ya draft chunein."; return; }
+    copyText(text, function (ok) {
+      status.textContent = ok ? "Review copy ho gaya." : "Text select ho gaya hai. Ab copy karein.";
+    });
+  });
+
+  refresh(true);
+})();
+</script>
+
+</body></html>
